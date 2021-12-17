@@ -17,6 +17,6 @@ const responseError = (res, message = 'Server Error', status = 500) => {
 }
 
 export default {
-	succes: responseSucces,
+	success: responseSucces,
 	error: responseError,
 }

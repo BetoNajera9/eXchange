@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 
-import { api } from '../../config/envServer.js'
+import { api } from '../../config/envServer'
 
 const render = (header, body) => {
 	console.log(header)
