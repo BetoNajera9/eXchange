@@ -10,3 +10,6 @@ export const signUpSchema = joi.object({
 	password: joi.string().min(8).required(),
 	name: joi.string().required(),
 })
+
+const regexToken = '(Bearer )([A-Za-z0-9]+(.)*)+'
+export const token = joi.string().regex(new RegExp(regexToken)).required()

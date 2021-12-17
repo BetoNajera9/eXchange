@@ -4,7 +4,7 @@ import express from 'express'
 // Other dependencies
 import response from '../utils/network/response'
 import * as authSchema from '../utils/schemas/authSchema'
-import validationHandler from '../utils/middlewares/validationHandler'
+import { bodyValidationHandler } from '../utils/middlewares/validationHandler'
 import Auth from '../services/auth'
 
 const router = new express.Router()
@@ -12,7 +12,7 @@ const auth = new Auth()
 
 router.post(
 	'/signIn',
-	validationHandler(authSchema.signInSchema),
+	bodyValidationHandler(authSchema.signInSchema),
 	async (req, res, next) => {
 		try {
 			const token = await auth.signIn(req.body.email, req.body.password)
@@ -26,7 +26,7 @@ router.post(
 
 router.post(
 	'/signUp',
-	validationHandler(authSchema.signUpSchema),
+	bodyValidationHandler(authSchema.signUpSchema),
 	async (req, res, next) => {
 		try {
 			const token = await auth.signUp(req.body)

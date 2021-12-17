@@ -5,13 +5,17 @@ import express from 'express'
 import ExchangeService from '../services/exchange'
 import response from '../utils/network/response'
 import { exchangeSchema } from '../utils/schemas/exchangeSchema'
-import validationHadler from '../utils/middlewares/validationHandler'
+import { token } from '../utils/schemas/authSchema'
+import {
+	bodyValidationHandler,
+	tokenValidationHandler,
+} from '../utils/middlewares/validationHandler'
 
 const router = new express.Router()
 const exchangeService = new ExchangeService()
 
 // Get all exchange Houses
-router.get('/', async (req, res, next) => {
+router.get('/', tokenValidationHandler(token), async (req, res, next) => {
 	try {
 		const data = await exchangeService.getExchange()
 
@@ -22,9 +26,9 @@ router.get('/', async (req, res, next) => {
 })
 
 // Get a exchange house
-router.get('/:id', async (req, res, next) => {
+router.get('/get', tokenValidationHandler(token), async (req, res, next) => {
 	try {
-		const data = await exchangeService.getByExchangeId(req.params.id)
+		const data = await exchangeService.getByExchangeId(req.auth.exchange_id)
 		response.success(res, 'Exchange House find', data)
 	} catch (err) {
 		next(err)
@@ -32,27 +36,40 @@ router.get('/:id', async (req, res, next) => {
 })
 
 // Create exchange house
-router.post('/', validationHadler(exchangeSchema), async (req, res, next) => {
-	try {
-		const data = req.body
+router.post(
+	'/',
+	tokenValidationHandler(token),
+	bodyValidationHandler(exchangeSchema),
+	async (req, res, next) => {
+		try {
+			const data = req.body
 
-		await exchangeService.setExchange(data)
+			await exchangeService.setExchange(data, req.auth._id)
 
-		response.success(res, 'Exchange house was created', data, 201)
-	} catch (err) {
-		next(err)
+			response.success(res, 'Exchange house was created', data, 201)
+		} catch (err) {
+			next(err)
+		}
 	}
-})
+)
 
 // Update exchange house
-router.put('/:id', validationHadler(exchangeSchema), async (req, res, next) => {
-	try {
-		const data = await exchangeService.updateExchange(req.body, req.params.id)
+router.put(
+	'/update',
+	tokenValidationHandler(token),
+	bodyValidationHandler(exchangeSchema),
+	async (req, res, next) => {
+		try {
+			const data = await exchangeService.updateExchange(
+				req.body,
+				req.auth.exchange_id
+			)
 
-		response.success(res, `Exchange house was updated`, data)
-	} catch (err) {
-		next(err)
+			response.success(res, `Exchange house was updated`, data)
+		} catch (err) {
+			next(err)
+		}
 	}
-})
+)
 
 export default router

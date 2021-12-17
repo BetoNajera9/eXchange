@@ -1,7 +1,6 @@
 import joi from 'joi'
 
 export const exchangeSchema = joi.object({
-	id: joi.number().required(),
 	compra: joi.number().required(),
 	venta: joi.number().required(),
 	banco: joi
