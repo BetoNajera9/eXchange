@@ -1,6 +1,9 @@
 // Other dependencies
 import ServerError from '../network/error'
 import jwt from '../auth/jwt'
+import Bank from '../../services/bank'
+
+const bank = new Bank()
 
 // Validation schema on scope
 const validate = (data, schema) => {
@@ -38,10 +41,19 @@ export const tokenValidationHandler = (
 			)
 		}
 
-		delete decodedToken.password
-		delete decodedToken.email
-
 		req.auth = decodedToken
 		next()
+	}
+}
+
+export const bankValidationHandler = () => {
+	return async (req, res, next) => {
+		const banks = await bank.getBanks(req.body.banco)
+
+		!banks
+			? next(
+					new ServerError('Invalid Banks', 401, 'InvalidBanks', 'InvalidBanks')
+			  )
+			: next()
 	}
 }

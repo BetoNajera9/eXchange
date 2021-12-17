@@ -9,6 +9,7 @@ import { token } from '../utils/schemas/authSchema'
 import {
 	bodyValidationHandler,
 	tokenValidationHandler,
+	bankValidationHandler,
 } from '../utils/middlewares/validationHandler'
 
 const router = new express.Router()
@@ -40,6 +41,7 @@ router.post(
 	'/',
 	tokenValidationHandler(token),
 	bodyValidationHandler(exchangeSchema),
+	bankValidationHandler(),
 	async (req, res, next) => {
 		try {
 			const data = req.body
