@@ -20,7 +20,7 @@ export default class MongoLib {
 		try {
 			if (!MongoLib.connection) {
 				await this.client.connect()
-				log.success(`Connected succesfully to ${this.dbName}`)
+				log.success(`Connected successfully to ${this.dbName}`)
 				MongoLib.connection = this.client.db(this.dbName)
 			}
 			return MongoLib.connection
@@ -30,7 +30,7 @@ export default class MongoLib {
 		}
 	}
 
-	async getbyId(collection, id, projection = {}) {
+	async getById(collection, id, projection = {}) {
 		const db = await this.connect()
 		return await db
 			.collection(collection)

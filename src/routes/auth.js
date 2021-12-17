@@ -17,7 +17,7 @@ router.post(
 		try {
 			const token = await auth.signIn(req.body.email, req.body.password)
 
-			response.success(res, 'Token was created succesfully', token)
+			response.success(res, 'Token was created successfully', token)
 		} catch (err) {
 			next(err)
 		}
@@ -31,7 +31,7 @@ router.post(
 		try {
 			const token = await auth.signUp(req.body)
 
-			response.success(res, 'Token was created succesfully', token)
+			response.success(res, 'Token was created successfully', token)
 		} catch (err) {
 			next(err)
 		}
