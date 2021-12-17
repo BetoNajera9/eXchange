@@ -1,8 +1,11 @@
+// Other dependenies
 import MongoLib from '../lib/mongo.js'
+import Auth from './auth.js'
 
 export default class Exchange {
 	constructor() {
 		this.collection = 'exchangeHouse'
+		this.auth = new Auth()
 		this.storage = new MongoLib()
 	}
 
@@ -16,8 +19,10 @@ export default class Exchange {
 		return exchange
 	}
 
-	async setExchange(exchange) {
+	async setExchange(exchange, authId) {
 		const exchangeId = await this.storage.create(this.collection, exchange)
+		await this.auth.addExchange(authId, exchangeId._id)
+
 		return exchangeId
 	}
 

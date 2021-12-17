@@ -1,8 +1,9 @@
 // Dependencies
-import MongoLib from '../lib/mongo'
 import bcrypt from 'bcrypt'
+import { ObjectId } from 'mongodb'
 
 // Other dependencies
+import MongoLib from '../lib/mongo'
 import jwt from '../utils/auth/jwt'
 import ServerError from '../utils/network/error'
 
@@ -55,5 +56,13 @@ export default class Auth {
 
 		if (!data.length) return undefined
 		return data[0]
+	}
+
+	async addExchange(authId, exchangeId) {
+		return await this.storage.update(
+			this.collection,
+			{ exchange_id: ObjectId(exchangeId) },
+			authId
+		)
 	}
 }
