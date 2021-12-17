@@ -5,6 +5,7 @@ import cors from 'cors'
 // Other dependencies
 import { api } from './config/envServer'
 import routes from './routes/index'
+import exchange from './routes/exchange'
 import { logErrors } from './utils/middlewares/errorsHandler'
 
 const app = express()
@@ -27,12 +28,13 @@ app.get('/', (req, res, next) => {
 	res.redirect('/api')
 })
 app.use('/api', routes)
+app.use('/api/exchange', exchange)
 
 // Handler Error
 app.use(logErrors)
 
 if (api.env !== 'production') {
-	const log = require('./utils/network/log.js')
+	const log = require('./utils/network/log')
 
 	app.listen(api.port, (err) => {
 		if (err) log.default.error(err)

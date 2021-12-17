@@ -9,6 +9,14 @@ export const api = {
 	cors: process.env.CORS || '',
 }
 
+// mongo ENV variables
+export const mongo = {
+	user: process.env.MONGO_USER || '',
+	password: process.env.MONGO_PASSWORD || '',
+	host: process.env.MONGO_HOST || '',
+	db: process.env.MONGO_DB || '',
+}
+
 // Sentry ENV variables
 export const sentry = {
 	dsn: process.env.SENTRY_DSN || '',
