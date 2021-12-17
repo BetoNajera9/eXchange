@@ -19,7 +19,7 @@ export const mongo = {
 
 export const jsonWT = {
 	key: process.env.JWT_SECRET || 'Secret',
-	expiration: process.env.JWT_EXPIRATION_TIME || 300,
+	expiration: process.env.JWT_EXPIRATION_TIME || '1h',
 }
 
 // Sentry ENV variables
