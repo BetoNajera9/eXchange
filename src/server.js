@@ -3,10 +3,11 @@ import express from 'express'
 import cors from 'cors'
 
 // Other dependencies
+import { logErrors } from './utils/middlewares/errorsHandler'
 import { api } from './config/envServer'
 import routes from './routes/index'
 import exchange from './routes/exchange'
-import { logErrors } from './utils/middlewares/errorsHandler'
+import auth from './routes/auth'
 
 const app = express()
 
@@ -28,6 +29,7 @@ app.get('/', (req, res, next) => {
 	res.redirect('/api')
 })
 app.use('/api', routes)
+app.use('/api/auth', auth)
 app.use('/api/exchange', exchange)
 
 // Handler Error
