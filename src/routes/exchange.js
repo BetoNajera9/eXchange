@@ -2,9 +2,10 @@
 import express from 'express'
 
 // Other dependencies
-// import { api } from '../config/envServer'
 import ExchangeService from '../services/exchange'
 import response from '../utils/network/response'
+import { exchangeSchema } from '../utils/schemas/exchangeSchema'
+import validationHadler from '../utils/middlewares/validationHandler'
 
 const router = new express.Router()
 const exchangeService = new ExchangeService()
@@ -31,7 +32,7 @@ router.get('/:id', async (req, res, next) => {
 })
 
 // Create exchange house
-router.post('/', async (req, res, next) => {
+router.post('/', validationHadler(exchangeSchema), async (req, res, next) => {
 	try {
 		const data = req.body
 
@@ -44,7 +45,7 @@ router.post('/', async (req, res, next) => {
 })
 
 // Update exchange house
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', validationHadler(exchangeSchema), async (req, res, next) => {
 	try {
 		const data = await exchangeService.updateExchange(req.body, req.params.id)
 
