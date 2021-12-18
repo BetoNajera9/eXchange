@@ -29,10 +29,14 @@
 		"@sentry/node": "^6.16.1",
 		"@sentry/tracing": "^6.16.1",
 		"axios": "^0.24.0",
+		"bcrypt": "^5.0.1",
 		"cors": "^2.8.5",
 		"dotenv": "^10.0.0",
 		"express": "^4.17.1",
-		"helmet": "^4.6.0"
+		"helmet": "^4.6.0",
+		"joi": "^17.5.0",
+		"jsonwebtoken": "^8.5.1",
+		"mongodb": "^4.2.2"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.16.0",

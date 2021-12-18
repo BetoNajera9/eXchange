@@ -1,6 +1,6 @@
 const responseSucces = (res, message, data, status = 200) => {
 	res.status(status).send({
-		succes: true,
+		success: true,
 		status,
 		message,
 		data,
@@ -9,7 +9,7 @@ const responseSucces = (res, message, data, status = 200) => {
 
 const responseError = (res, message = 'Server Error', status = 500) => {
 	res.status(status).send({
-		succes: false,
+		success: false,
 		status,
 		message,
 		data: null,
@@ -17,6 +17,6 @@ const responseError = (res, message = 'Server Error', status = 500) => {
 }
 
 export default {
-	succes: responseSucces,
+	success: responseSucces,
 	error: responseError,
 }

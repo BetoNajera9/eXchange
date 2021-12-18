@@ -3,8 +3,8 @@ import * as Sentry from '@sentry/node'
 import '@sentry/tracing'
 
 // Other dependencies
-import { api, sentry } from '../../config/envServer.js'
-import response from '../network/response.js'
+import { api, sentry } from '../../config/envServer'
+import response from '../network/response'
 
 // Handler sentry configuration
 Sentry.init({
