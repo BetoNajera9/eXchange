@@ -35,7 +35,7 @@ app.use('/api/exchange', exchange)
 // Handler Error
 app.use(logErrors)
 
-if (api.env !== 'production') {
+if (api.env !== 'test') {
 	const log = require('./utils/network/log')
 
 	app.listen(api.port, (err) => {
@@ -45,6 +45,8 @@ if (api.env !== 'production') {
 			else log.default.success(`=> Server on http://localhost:${api.port}`)
 		}
 	})
+} else {
+	app.listen(api.port)
 }
 
 export default app
