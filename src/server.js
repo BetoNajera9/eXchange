@@ -36,13 +36,11 @@ app.use('/api/exchange', exchange)
 app.use(logErrors)
 
 if (api.env !== 'test') {
-	const log = require('./utils/network/log')
-
 	app.listen(api.port, (err) => {
-		if (err) log.default.error(err)
+		if (err) console.error(err)
 		else {
-			if (api.server !== '') log.default.success(`=> Server on ${api.server}`)
-			else log.default.success(`=> Server on http://localhost:${api.port}`)
+			if (api.server !== '') console.log(`=> Server on ${api.server}`)
+			else console.log(`=> Server on http://localhost:${api.port}`)
 		}
 	})
 } else {
