@@ -16,7 +16,7 @@ export const bodyValidationHandler = (schema, check = 'body') => {
 	return (req, res, next) => {
 		const error = validate(req[check], schema)
 		error
-			? next(new ServerError(error.message, 400, 'invalidJSON', 'invalidJSON'))
+			? next(new ServerError(error.message, 400, 'InvalidJSON', 'InvalidJSON'))
 			: next()
 	}
 }
@@ -30,14 +30,14 @@ export const tokenValidationHandler = (
 		const token = req[parameter][check]
 		const error = validate(token, schema)
 		if (error) {
-			next(new ServerError(error.message, 400, 'InvalidToken', 'InvalidToken'))
+			next(new ServerError(error.message, 401, 'InvalidToken', 'InvalidToken'))
 		}
 
 		const decodedToken = jwt.decodeHeader(token)
 
 		if (!decodedToken) {
 			next(
-				new ServerError('Invalid Token', 401, 'InvalidToken', 'InvalidToken')
+				new ServerError('Invalid Token', 402, 'InvalidToken', 'InvalidToken')
 			)
 		}
 
@@ -52,7 +52,7 @@ export const bankValidationHandler = () => {
 
 		!banks
 			? next(
-					new ServerError('Invalid Banks', 401, 'InvalidBanks', 'InvalidBanks')
+					new ServerError('Invalid Banks', 400, 'InvalidBanks', 'InvalidBanks')
 			  )
 			: next()
 	}

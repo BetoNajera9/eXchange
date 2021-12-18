@@ -19,7 +19,7 @@ export default class Auth {
 			if (!data || data === false) {
 				throw new ServerError(
 					'Invalid Information',
-					401,
+					400,
 					'InvalidInfo',
 					'InvalidInfo'
 				)

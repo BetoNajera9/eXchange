@@ -15,7 +15,7 @@ const verify = (token) => {
 	try {
 		return jwt.verify(token, jsonWT.key)
 	} catch (err) {
-		throw new ServerError(err.message, 401, err.name, err.name)
+		throw new ServerError(err.message, 402, err.name, err.name)
 	}
 }
 
