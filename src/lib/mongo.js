@@ -34,8 +34,7 @@ export default class MongoLib {
 		const db = await this.connect()
 		return await db
 			.collection(collection)
-			.find({ _id: ObjectId(id) }, { projection })
-			.toArray()
+			.findOne({ _id: ObjectId(id) }, { projection })
 	}
 
 	async get(collection, query = {}, projection = {}) {
