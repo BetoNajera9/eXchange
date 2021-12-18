@@ -19,7 +19,7 @@ export default class Auth {
 			if (!data || data === false) {
 				throw new ServerError(
 					'Invalid Information',
-					401,
+					400,
 					'InvalidInfo',
 					'InvalidInfo'
 				)
@@ -74,13 +74,6 @@ export default class Auth {
 		const data = await this.storage.get(this.collection, {
 			email,
 		})
-
-		if (!data.length) return undefined
-		return data[0]
-	}
-
-	async getById(id) {
-		const data = await this.storage.getById(this.collection, id)
 
 		if (!data.length) return undefined
 		return data[0]
