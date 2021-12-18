@@ -1,11 +1,10 @@
 // Other dependenies
 import MongoLib from '../lib/mongo.js'
-import Auth from './auth.js'
+// import ServerError from '../utils/network/error'
 
 export default class Exchange {
 	constructor() {
 		this.collection = 'exchangeHouse'
-		this.auth = new Auth()
 		this.storage = new MongoLib()
 	}
 
@@ -15,18 +14,20 @@ export default class Exchange {
 	}
 
 	async getByExchangeId(id) {
-		const exchange = await this.storage.getbyId(this.collection, id)
+		const exchange = await this.storage.getById(this.collection, id)
 		return exchange
 	}
 
-	async setExchange(exchange, authId) {
+	async setExchange(exchange) {
 		const exchangeId = await this.storage.create(this.collection, exchange)
-		await this.auth.addExchange(authId, exchangeId._id)
 
 		return exchangeId
 	}
 
 	async updateExchange(exchange, exchangeId) {
+		const now = new Date()
+		exchange.actualizado = now
+
 		const updatedExchangeId = await this.storage.update(
 			this.collection,
 			exchange,
