@@ -78,11 +78,4 @@ export default class Auth {
 		if (!data.length) return undefined
 		return data[0]
 	}
-
-	async getById(id) {
-		const data = await this.storage.getById(this.collection, id)
-
-		if (!data.length) return undefined
-		return data[0]
-	}
 }

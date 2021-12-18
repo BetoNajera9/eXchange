@@ -39,12 +39,4 @@ export default class Exchange {
 		)
 		return updatedExchangeId
 	}
-
-	async deleteExchange(exchangeId) {
-		const deleletedExchangeId = await this.storage.delete(
-			this.collection,
-			exchangeId
-		)
-		return deleletedExchangeId
-	}
 }
