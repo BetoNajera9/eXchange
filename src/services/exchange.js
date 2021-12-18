@@ -1,11 +1,12 @@
 // Other dependenies
 import MongoLib from '../lib/mongo.js'
-// import ServerError from '../utils/network/error'
+import History from './history.js'
 
 export default class Exchange {
 	constructor() {
 		this.collection = 'exchangeHouse'
 		this.storage = new MongoLib()
+		this.history = new History()
 	}
 
 	async getExchange(query) {
@@ -27,6 +28,9 @@ export default class Exchange {
 	async updateExchange(exchange, exchangeId) {
 		const now = new Date()
 		exchange.actualizado = now
+
+		const oldExchange = await this.getByExchangeId(exchangeId)
+		await this.history.updateHistory(oldExchange)
 
 		const updatedExchangeId = await this.storage.update(
 			this.collection,
