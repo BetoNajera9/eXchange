@@ -1,16 +1,37 @@
 // Other dependenies
 import MongoLib from '../lib/mongo.js'
 import History from './history.js'
+import Bank from './bank'
 
 export default class Exchange {
 	constructor() {
 		this.collection = 'exchangeHouse'
 		this.storage = new MongoLib()
 		this.history = new History()
+		this.bank = new Bank()
 	}
 
 	async getExchange(query) {
-		const exchangeHouses = await this.storage.get(this.collection, query)
+		const exchangeHouses = await this.storage.join(
+			'authentication',
+			{
+				name: 'exchangeHouse',
+				id: 'exchange_id',
+				foreignId: '_id',
+			},
+			'details'
+		)
+
+		await Promise.all(
+			exchangeHouses.map(async (i) => {
+				delete i.email
+				delete i.passwword
+
+				i.details[0].banco = await this.bank.getBanks(i.details[0].banco)
+				return i
+			})
+		)
+
 		return exchangeHouses
 	}
 
