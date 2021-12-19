@@ -5,8 +5,9 @@ import cors from 'cors'
 // Other dependencies
 import { logErrors } from './utils/middlewares/errorsHandler'
 import { api } from './config/envServer'
-import routes from './routes/index'
+import information from './routes/information'
 import exchange from './routes/exchange'
+import routes from './routes/index'
 import auth from './routes/auth'
 
 const app = express()
@@ -31,6 +32,7 @@ app.get('/', (req, res, next) => {
 app.use('/api', routes)
 app.use('/api/auth', auth)
 app.use('/api/exchange', exchange)
+app.use('/api/information', information)
 
 // Handler Error
 app.use(logErrors)

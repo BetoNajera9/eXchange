@@ -49,6 +49,8 @@ export default class Exchange {
 	async updateExchange(exchange, exchangeId) {
 		const now = new Date()
 		exchange.actualizado = now
+		exchange.compra = +exchange.compra
+		exchange.venta = +exchange.venta
 
 		const oldExchange = await this.getByExchangeId(exchangeId)
 		await this.history.updateHistory(oldExchange)
