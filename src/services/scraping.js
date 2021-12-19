@@ -48,8 +48,6 @@ export default class Scripting {
 		await page.waitForSelector('.calendar-table')
 		await page.waitForTimeout(4000)
 
-		const d = []
-
 		const elements = await page.evaluate(() => {
 			const today = new Date()
 
@@ -84,20 +82,20 @@ export default class Scripting {
 		})
 		await this.browser.close()
 
-		console.log(d)
+		console.log(elements)
 
 		const exchange = {}
 
-		elements.forEach((data) => {
-			if (data.includes('Compra')) {
-				const buy = 'compra'
-				exchange[buy] = +data.replace('Compra', '').replace(' ', '')
-			}
-			if (data.includes('Venta')) {
-				const sell = 'venta'
-				exchange[sell] = +data.replace('Venta', '').replace(' ', '')
-			}
-		})
+		// elements.forEach((data) => {
+		// 	if (data.includes('Compra')) {
+		// 		const buy = 'compra'
+		// 		exchange[buy] = +data.replace('Compra', '').replace(' ', '')
+		// 	}
+		// 	if (data.includes('Venta')) {
+		// 		const sell = 'venta'
+		// 		exchange[sell] = +data.replace('Venta', '').replace(' ', '')
+		// 	}
+		// })
 
 		exchange.actualizado = new Date()
 
