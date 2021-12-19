@@ -51,11 +51,6 @@ export default class Scripting {
 		const d = []
 
 		const elements = await page.evaluate(() => {
-			d.push(
-				document.querySelectorAll(
-					'#holder-calendar > table > tbody > tr:nth-child(3) > td.table-bordered.calendar-day.current._2021_12_18.c-saturday.js-cal-option > div.date'
-				)[0].textContent
-			)
 			const today = new Date()
 
 			const rows = Array.from(
@@ -81,7 +76,11 @@ export default class Scripting {
 				})
 			})
 
-			return exchange
+			console.log(exchange)
+
+			return document.querySelectorAll(
+				'#holder-calendar > table > tbody > tr:nth-child(3) > td.table-bordered.calendar-day.current._2021_12_18.c-saturday.js-cal-option > div.date'
+			)[0].textContent
 		})
 		await this.browser.close()
 
