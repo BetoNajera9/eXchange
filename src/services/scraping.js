@@ -56,7 +56,7 @@ export default class Scripting {
 				document.querySelectorAll('#holder-calendar > table > tbody')[0].rows
 			)
 
-			exchange.push(rows[0].values)
+			exchange.push(rows[0].textContent)
 
 			// rows.forEach((cell) => {
 			// 	Array.from(cell.querySelectorAll('td')).forEach((data) => {
@@ -74,8 +74,6 @@ export default class Scripting {
 			// 		}
 			// 	})
 			// })
-
-			console.log(exchange)
 
 			return exchange
 		})
