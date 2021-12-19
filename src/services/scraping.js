@@ -46,10 +46,16 @@ export default class Scripting {
 		)
 		await page.goto(this.sunatUrl)
 		await page.waitForSelector('.calendar-table')
+		await page.waitForTimeout(4000)
 
-		await page.screenshot({ path: 'l.png' })
+		const d = []
 
 		const elements = await page.evaluate(() => {
+			d.push(
+				document.querySelectorAll(
+					'#holder-calendar > table > tbody > tr:nth-child(3) > td.table-bordered.calendar-day.current._2021_12_18.c-saturday.js-cal-option > div.date'
+				)[0].textContent
+			)
 			const today = new Date()
 
 			const rows = Array.from(
@@ -79,7 +85,7 @@ export default class Scripting {
 		})
 		await this.browser.close()
 
-		console.log(elements)
+		console.log(d)
 
 		const exchange = {}
 
