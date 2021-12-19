@@ -5,8 +5,6 @@ export default class Scripting {
 		this.baseUrl = 'https://www.bcrp.gob.pe'
 		this.sunatUrl = 'https://e-consulta.sunat.gob.pe/cl-at-ittipcam/tcS01Alias'
 		this.puppeteerArgs = {
-			executablePath:
-				'/mnt/c/Program Files/Google/Chrome/Application/chrome.exe',
 			args: ['--no-sandbox'],
 			headless: true,
 		}
