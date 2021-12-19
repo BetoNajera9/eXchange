@@ -39,6 +39,23 @@ export default class MongoLib {
 		return await db.collection(collection).find(query, { projection }).toArray()
 	}
 
+	async join(collection, foreignCollection, nameField) {
+		const db = await this.connect()
+		return await db
+			.collection(collection)
+			.aggregate([
+				{
+					$lookup: {
+						from: foreignCollection.name,
+						localField: foreignCollection.id,
+						foreignField: foreignCollection.foreignId,
+						as: nameField,
+					},
+				},
+			])
+			.toArray()
+	}
+
 	async create(collection, data) {
 		const db = await this.connect()
 		return await db.collection(collection).insertOne(data)

@@ -12,7 +12,7 @@ export default class Bank {
 			_id: { $in: bankIds },
 		})
 
-		if (!bank.length) return undefined
+		if (!bank) return undefined
 		return bank
 	}
 }
