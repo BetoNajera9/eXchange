@@ -47,6 +47,8 @@ export default class Scripting {
 		await page.goto(this.sunatUrl)
 		await page.waitForSelector('.calendar-table')
 
+		await page.screenshot({ path: 'l.png' })
+
 		const elements = await page.evaluate(() => {
 			const today = new Date()
 
@@ -76,6 +78,8 @@ export default class Scripting {
 			return exchange
 		})
 		await this.browser.close()
+
+		console.log(elements)
 
 		const exchange = {}
 
