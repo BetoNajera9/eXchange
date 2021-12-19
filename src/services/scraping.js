@@ -56,25 +56,29 @@ export default class Scripting {
 				document.querySelectorAll('#holder-calendar > table > tbody')[0].rows
 			)
 
-			exchange.push(rows[0].textContent)
+			rows.forEach((cell) => {
+				Array.from(cell.querySelectorAll('td')).forEach((data) => {
+					const date = new Date(data.attributes.getNamedItem('data-date').value)
 
-			// rows.forEach((cell) => {
-			// 	Array.from(cell.querySelectorAll('td')).forEach((data) => {
-			// 		const date = new Date(data.attributes.getNamedItem('data-date').value)
+					exchange.push(date)
+					// if (date.getMonth() === today.getMonth()) {
+					// 	if (date.getDate() >= today.getDate()) {
+					// 		const day = Array.from(data.querySelectorAll('div')).map((i) => {
+					// 			return i.textContent
+					// 		})
+					// 		if (day.length > 1) {
+					// 			exchange = day
+					// 		}
+					// 	}
+					// }
+				})
+			})
 
-			// 		if (date.getMonth() === today.getMonth()) {
-			// 			if (date.getDate() >= today.getDate()) {
-			// 				const day = Array.from(data.querySelectorAll('div')).map((i) => {
-			// 					return i.textContent
-			// 				})
-			// 				if (day.length > 1) {
-			// 					exchange = day
-			// 				}
-			// 			}
-			// 		}
-			// 	})
-			// })
-
+			exchange.push(
+				document.querySelectorAll(
+					'#holder-calendar > table > tbody > tr:nth-child(1) > td.table-bordered.calendar-day.current._2021_12_4.c-saturday.js-cal-option > div.event.normal-all-day.begin.end'
+				)[0].textContent
+			)
 			return exchange
 		})
 
