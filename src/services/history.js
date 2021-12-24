@@ -28,13 +28,16 @@ export default class History {
 	}
 
 	async deleteHistory(data) {
-		const shows = data[Object.keys(data)[1]]
+		if (data !== null) {
+			console.log(data)
+			const shows = data[Object.keys(data)[1]]
 
-		if (shows) {
-			const today = new Date()
+			if (shows) {
+				const today = new Date()
 
-			if (today.getUTCDate() > shows.actualizado.getUTCDate()) {
-				this.storage.delete(this.collection, data._id)
+				if (today.getUTCDate() > shows.actualizado.getUTCDate()) {
+					this.storage.delete(this.collection, data._id)
+				}
 			}
 		}
 	}
