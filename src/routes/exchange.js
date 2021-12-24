@@ -16,7 +16,7 @@ const router = new express.Router()
 const exchangeService = new ExchangeService()
 
 // Get all exchange Houses
-router.get('/', tokenValidationHandler(token), async (req, res, next) => {
+router.get('/', async (req, res, next) => {
 	try {
 		const data = await exchangeService.getExchange()
 
