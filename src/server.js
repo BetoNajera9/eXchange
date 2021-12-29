@@ -1,16 +1,21 @@
 // Dependencies
 import express from 'express'
 import cors from 'cors'
+import cron from 'node-cron'
 
 // Other dependencies
 import { logErrors } from './utils/middlewares/errorsHandler'
 import { api } from './config/envServer'
+import schedules from './services/schedules'
 import information from './routes/information'
 import exchange from './routes/exchange'
 import routes from './routes/index'
 import auth from './routes/auth'
 
 const app = express()
+
+// Schedules
+cron.schedule('0 0 * * *', schedules.sunat)
 
 // Middlewares
 if (api.env !== 'production') {
@@ -38,13 +43,11 @@ app.use('/api/information', information)
 app.use(logErrors)
 
 if (api.env !== 'test') {
-	const log = require('./utils/network/log')
-
 	app.listen(api.port, (err) => {
-		if (err) log.default.error(err)
+		if (err) console.error(err)
 		else {
-			if (api.server !== '') log.default.success(`=> Server on ${api.server}`)
-			else log.default.success(`=> Server on http://localhost:${api.port}`)
+			if (api.server !== '') console.log(`=> Server on ${api.server}`)
+			else console.log(`=> Server on http://localhost:${api.port}`)
 		}
 	})
 } else {
