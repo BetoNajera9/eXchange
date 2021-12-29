@@ -70,9 +70,9 @@ export default class Auth {
 		return token
 	}
 
-	async getByEmail(email) {
+	async getByName(name) {
 		const data = await this.storage.get(this.collection, {
-			email,
+			name,
 		})
 
 		if (!data.length) return undefined
