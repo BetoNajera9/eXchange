@@ -2,7 +2,6 @@ import { MongoClient, ObjectId } from 'mongodb'
 
 import { mongo } from '../config/envServer.js'
 import ServerError from '../utils/network/error.js'
-import log from '../utils/network/log.js'
 
 const USER = encodeURIComponent(mongo.user)
 const PASSWORD = encodeURIComponent(mongo.password)
@@ -20,12 +19,10 @@ export default class MongoLib {
 		try {
 			if (!MongoLib.connection) {
 				await this.client.connect()
-				log.success(`Connected successfully to ${this.dbName}`)
 				MongoLib.connection = this.client.db(this.dbName)
 			}
 			return MongoLib.connection
 		} catch ({ message }) {
-			log.error(message)
 			throw new ServerError(message, 500)
 		}
 	}
@@ -42,18 +39,14 @@ export default class MongoLib {
 		return await db.collection(collection).find(query, { projection }).toArray()
 	}
 
-	async join(collection, foreignCollection, nameField) {
+	async join(collection, query) {
+		console.log(query)
 		const db = await this.connect()
 		return await db
 			.collection(collection)
 			.aggregate([
 				{
-					$lookup: {
-						from: foreignCollection.name,
-						localField: foreignCollection.id,
-						foreignField: foreignCollection.foreignId,
-						as: nameField,
-					},
+					$lookup: query,
 				},
 			])
 			.toArray()
