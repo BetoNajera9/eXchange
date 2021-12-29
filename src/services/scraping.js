@@ -4,10 +4,15 @@ export default class Scripting {
 	constructor() {
 		this.baseUrl = 'https://www.bcrp.gob.pe'
 		this.sunatUrl = 'https://e-consulta.sunat.gob.pe/cl-at-ittipcam/tcS01Alias'
+		this.agent =
+			'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3419.0 Safari/537.36'
 		this.puppeteerArgs = {
-			executablePath:
-				'/mnt/c/Program Files/Google/Chrome/Application/chrome.exe',
-			args: ['--no-sandbox'],
+			args: [
+				'--no-sandbox',
+				'--disable-dev-shm-usage',
+				'--disable-gpu',
+				'--disable-setuid-sandbox',
+			],
 			headless: true,
 		}
 	}
@@ -43,9 +48,7 @@ export default class Scripting {
 	async exchange() {
 		this.browser = await puppeteer.launch(this.puppeteerArgs)
 		const page = await this.browser.newPage()
-		await page.setUserAgent(
-			'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3419.0 Safari/537.36'
-		)
+		await page.setUserAgent(this.agent)
 		await page.goto(this.sunatUrl)
 		await page.waitForSelector('.calendar-table')
 
@@ -91,8 +94,6 @@ export default class Scripting {
 				exchange[sell] = +data.replace('Venta', '').replace(' ', '')
 			}
 		})
-
-		exchange.actualizado = new Date()
 
 		return exchange
 	}

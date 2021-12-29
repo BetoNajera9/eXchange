@@ -29,7 +29,6 @@ export default class History {
 
 	async deleteHistory(data) {
 		if (data !== null) {
-			console.log(data)
 			const shows = data[Object.keys(data)[1]]
 
 			if (shows) {
