@@ -78,4 +78,13 @@ export default class Auth {
 		if (!data.length) return undefined
 		return data[0]
 	}
+
+	async getByEmail(email) {
+		const data = await this.storage.get(this.collection, {
+			email,
+		})
+
+		if (!data.length) return undefined
+		return data[0]
+	}
 }
