@@ -34,6 +34,11 @@ export default class MongoLib {
 			.findOne({ _id: ObjectId(id) }, { projection })
 	}
 
+	async getBySimpleId(collection, id, projection = {}) {
+		const db = await this.connect()
+		return await db.collection(collection).findOne({ _id: id }, { projection })
+	}
+
 	async get(collection, query = {}, projection = {}) {
 		const db = await this.connect()
 		return await db.collection(collection).find(query, { projection }).toArray()
@@ -62,6 +67,13 @@ export default class MongoLib {
 		return await db
 			.collection(collection)
 			.updateOne({ _id: ObjectId(id) }, { $set: data }, { upsert: true })
+	}
+
+	async updateSimpleId(collection, data, id) {
+		const db = await this.connect()
+		return await db
+			.collection(collection)
+			.updateOne({ _id: id }, { $set: data }, { upsert: true })
 	}
 
 	async delete(collection, id) {
