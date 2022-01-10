@@ -3,7 +3,7 @@ name: Heroku docker container deploy
 on:
   push:
     branches:
-      - test
+      - master
 
 jobs:
   build:
@@ -15,7 +15,7 @@ jobs:
         id: heroku
         uses: jctaveras/heroku-deploy@v1.0.0 # use the latest version of the action
         with:
-          api_key: ${{secrets.HEROKU_API_KEY}}
-          app_name: ${{secrets.HEROKU_NAME}}
-          email: ${{secrets.HEROKU_EMAIL}}
+          api_key: ${{secrets.HEROKU_API_KEY_PRODUCTION}}
+          app_name: ${{secrets.HEROKU_NAME_PRODUCTION}}
+          email: ${{secrets.HEROKU_EMAIL_PRODUCTION}}
           dockerfile: './Dockerfile'

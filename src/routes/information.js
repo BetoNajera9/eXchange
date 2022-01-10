@@ -1,41 +1,56 @@
 // Dependencies
 import express from 'express'
-import axios from 'axios'
 
 // Other ddependencies
 import { tokenValidationHandler } from '../utils/middlewares/validationHandler'
 import { token } from '../utils/schemas/authSchema'
-import Scraping from '../services/scraping'
 import response from '../utils/network/response'
+import ExchangeRate from '../services/exchangeRate'
+import News from '../services/news'
+// import Scraping from '../services/scraping'
 
-const scraping = new Scraping()
+// const scraping = new Scraping()
 const router = new express.Router()
+const exchangeRate = new ExchangeRate()
+const news = new News()
 
-router.get('/news', async (req, res, next) => {
+router.get('/news/:id', async (req, res, next) => {
 	try {
-		await scraping.news()
-		response.success(res, `Si se pudo`, { secces: true }, 201)
+		const data = await news.getNews(req.params.id)
+
+		response.success(res, `News find`, data, 200)
 	} catch (err) {
 		next(err)
 	}
 })
 
-router.get(
-	'/exchange',
+router.get('/exchangeRate/:id', async (req, res, next) => {
+	try {
+		const data = await exchangeRate.getExchangeRate(req.params.id)
+
+		response.success(res, `News find`, data, 200)
+	} catch (err) {
+		next(err)
+	}
+})
+
+router.put('/news', tokenValidationHandler(token), async (req, res, next) => {
+	try {
+		const data = await news.updateNews(req.body)
+
+		response.success(res, `News was update`, data, 201)
+	} catch (err) {
+		next(err)
+	}
+})
+
+router.post(
+	'/exchangeRate',
 	tokenValidationHandler(token),
 	async (req, res, next) => {
 		try {
-			const { data } = await axios.get(
-				'https://www.deperu.com/api/rest/cotizaciondolar.json'
-			)
-			data.nombre = 'SUNAT'
-
-			response.success(
-				res,
-				`Data find`,
-				{ ...data.Cotizacion[0], nombre: 'SUNAT', actualizado: new Date() },
-				200
-			)
+			const data = await exchangeRate.setExchangeRate(req.body)
+			response.success(res, `Exhcnage Rate was update`, data, 201)
 		} catch (err) {
 			next(err)
 		}

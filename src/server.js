@@ -1,16 +1,21 @@
 // Dependencies
 import express from 'express'
 import cors from 'cors'
+import cron from 'node-cron'
 
 // Other dependencies
 import { logErrors } from './utils/middlewares/errorsHandler'
 import { api } from './config/envServer'
+import schedules from './services/schedules'
 import information from './routes/information'
 import exchange from './routes/exchange'
 import routes from './routes/index'
 import auth from './routes/auth'
 
 const app = express()
+
+// Schedules
+cron.schedule('0 0 * * *', schedules.sunat)
 
 // Middlewares
 if (api.env !== 'production') {

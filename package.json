@@ -37,7 +37,8 @@
 		"joi": "^17.5.0",
 		"jsonwebtoken": "^8.5.1",
 		"mongodb": "^4.2.2",
-		"puppeteer": "^13.0.0"
+		"node-cron": "^3.0.0",
+		"puppeteer": "^10.0.0"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.16.0",

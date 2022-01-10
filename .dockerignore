@@ -1,0 +1,21 @@
+# VScode files
+.vscode
+
+# Git files
+.git
+.gitignore
+
+# GitHub files
+.github
+
+# Dotenv environment variables file
+.env.*
+
+# Documentation
+README.md
+
+# Docker
+DockerFIle
+
+# Node modules installed
+node_modules

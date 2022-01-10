@@ -11,15 +11,38 @@ export default class Exchange {
 		this.bank = new Bank()
 	}
 
-	async getExchange(query) {
+	async getExchange(query, variables = {}) {
+		const dataQuery = () => {
+			if (query) {
+				return {
+					from: 'exchangeHouse',
+					let: { authentication_exchange_id: '$exchange_id', ...variables },
+					pipeline: [
+						{
+							$match: {
+								$expr: {
+									$and: [
+										{ $eq: ['$$authentication_exchange_id', '$_id'] },
+										query,
+									],
+								},
+							},
+						},
+					],
+					as: 'details',
+				}
+			}
+			return {
+				from: 'exchangeHouse',
+				localField: 'exchange_id',
+				foreignField: '_id',
+				as: 'details',
+			}
+		}
+
 		const exchangeHouses = await this.storage.join(
 			'authentication',
-			{
-				name: 'exchangeHouse',
-				id: 'exchange_id',
-				foreignId: '_id',
-			},
-			'details'
+			dataQuery()
 		)
 
 		await Promise.all(
@@ -53,6 +76,7 @@ export default class Exchange {
 		exchange.venta = +exchange.venta
 
 		const oldExchange = await this.getByExchangeId(exchangeId)
+
 		await this.history.updateHistory(oldExchange)
 
 		const updatedExchangeId = await this.storage.update(
