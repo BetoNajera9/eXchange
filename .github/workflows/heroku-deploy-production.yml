@@ -1,0 +1,21 @@
+name: Heroku docker container deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build, Push and Deploy to Heroku #set the whatever name you want to this step
+        id: heroku
+        uses: jctaveras/heroku-deploy@v1.0.0 # use the latest version of the action
+        with:
+          api_key: ${{secrets.HEROKU_API_KEY_PRODUCTION}}
+          app_name: ${{secrets.HEROKU_NAME_PRODUCTION}}
+          email: ${{secrets.HEROKU_EMAIL_PRODUCTION}}
+          dockerfile: './Dockerfile'
