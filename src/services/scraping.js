@@ -59,23 +59,23 @@ export default class Scripting {
 				document.querySelectorAll('#holder-calendar > table > tbody')[0].rows
 			)
 
-			return rows
 			let exchange = []
 
 			rows.forEach((cell) => {
 				Array.from(cell.querySelectorAll('td')).forEach((data) => {
-					const date = new Date(data.attributes.getNamedItem('data-date').value)
+					exchange.push(data.attributes.getNamedItem('data-date').value)
+					// const date = new Date(data.attributes.getNamedItem('data-date').value)
 
-					if (date.getMonth() === today.getMonth()) {
-						if (date.getDate() >= today.getDate()) {
-							const day = Array.from(data.querySelectorAll('div')).map((i) => {
-								return i.textContent
-							})
-							if (day.length > 1) {
-								exchange = day
-							}
-						}
-					}
+					// if (date.getMonth() === today.getMonth()) {
+					// 	if (date.getDate() >= today.getDate()) {
+					// 		const day = Array.from(data.querySelectorAll('div')).map((i) => {
+					// 			return i.textContent
+					// 		})
+					// 		if (day.length > 1) {
+					// 			exchange = day
+					// 		}
+					// 	}
+					// }
 				})
 			})
 
