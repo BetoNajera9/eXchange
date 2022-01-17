@@ -15,7 +15,7 @@ import auth from './routes/auth'
 const app = express()
 
 // Schedules
-cron.schedule('0,30,35 0,19 * * *', schedules.sunat)
+cron.schedule('0,30,35 0,3,6,19 * * *', schedules.sunat)
 
 // Middlewares
 if (api.env !== 'production') {
