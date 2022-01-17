@@ -71,9 +71,8 @@ export default class Scripting {
 						`${date.getDate()}/${date.getMonth()}/${date.getFullYear()} - ${today.getDate()}/${today.getMonth()}/${today.getFullYear()}`
 					)
 					if (date.getMonth() === today.getMonth()) {
-						exchange.push('Get in Month')
 						if (date.getDate() >= today.getDate()) {
-							exchange.push('Get in Day')
+							exchange.push(data.querySelectorAll('div').textContent)
 							const day = Array.from(data.querySelectorAll('div')).map((i) => {
 								return i.textContent
 							})
