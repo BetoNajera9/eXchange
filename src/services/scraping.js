@@ -61,6 +61,11 @@ export default class Scripting {
 			)
 
 			let exchange = []
+			exchange.push(
+				document.querySelector(
+					'#holder-calendar > table > tbody > tr:nth-child(3) > td.table-bordered.calendar-day.current._2022_1_14.js-cal-option > div.event.normal-all-day.begin.end'
+				).textContent
+			)
 
 			rows.forEach((cell) => {
 				Array.from(cell.querySelectorAll('td')).forEach((data) => {
@@ -68,11 +73,11 @@ export default class Scripting {
 					const date = new Date(data.attributes.getNamedItem('data-date').value)
 
 					exchange.push(
-						`${date.getDate()}/${date.getMonth()}/${date.getFullYear()} - ${today.getDate()}/${today.getMonth()}/${today.getFullYear()}`
+						`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
 					)
 					if (date.getMonth() === today.getMonth()) {
 						if (date.getDate() >= today.getDate()) {
-							exchange.push(data.querySelectorAll('div').textContent)
+							exchange.push(data.querySelectorAll('div').value)
 							const day = Array.from(data.querySelectorAll('div')).map((i) => {
 								return i.textContent
 							})
