@@ -63,7 +63,7 @@ export default class Scripting {
 			let exchange = []
 			exchange.push(
 				document.querySelector(
-					'#holder-calendar > table > tbody > tr:nth-child(3) > td.table-bordered.calendar-day.current._2022_1_14.js-cal-option > div.event.normal-all-day.begin.end'
+					'#holder-calendar > table > tbody > tr:nth-child(3) > td.table-bordered.calendar-day.current._2022_1_14.js-cal-option'
 				).textContent
 			)
 
