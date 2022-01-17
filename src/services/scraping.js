@@ -53,8 +53,6 @@ export default class Scripting {
 		await page.waitForSelector('.calendar-table')
 
 		console.log('->')
-		const now = new Date()
-		console.log(`${now.getDate()}/${now.getMonth()}/${now.getFullYear()}`)
 		const elements = await page.evaluate(() => {
 			const today = new Date()
 
@@ -63,31 +61,27 @@ export default class Scripting {
 			)
 
 			let exchange = []
-			exchange.push(
-				`${today.getDate()}/${today.getMonth()}/${today.getFullYear()}`
-			)
 
 			rows.forEach((cell) => {
 				Array.from(cell.querySelectorAll('td')).forEach((data) => {
 					exchange.push('=>')
 					const date = new Date(data.attributes.getNamedItem('data-date').value)
-					exchange.push(date)
-					exchange.push(
-						data.attributes.getNamedItem('data-date').value.getMonth()
-					)
 
-					// if (date.getMonth() === today.getMonth()) {
-					// 	exchange.push('Get in Month')
-					// 	if (date.getDate() >= today.getDate()) {
-					// 		exchange.push('Get in Day')
-					// 		const day = Array.from(data.querySelectorAll('div')).map((i) => {
-					// 			return i.textContent
-					// 		})
-					// 		if (day.length > 1) {
-					// 			exchange = day
-					// 		}
-					// 	}
-					// }
+					exchange.push(
+						`${date.getDate()}/${date.getMonth()}/${date.getFullYear()} - ${today.getDate()}/${today.getMonth()}/${today.getFullYear()}`
+					)
+					if (date.getMonth() === today.getMonth()) {
+						exchange.push('Get in Month')
+						if (date.getDate() >= today.getDate()) {
+							exchange.push('Get in Day')
+							const day = Array.from(data.querySelectorAll('div')).map((i) => {
+								return i.textContent
+							})
+							if (day.length > 1) {
+								exchange = day
+							}
+						}
+					}
 				})
 			})
 
