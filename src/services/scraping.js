@@ -83,6 +83,7 @@ export default class Scripting {
 		await this.browser.close()
 
 		const exchange = {}
+		console.log(exchange)
 
 		elements.forEach((data) => {
 			if (data.includes('Compra')) {
