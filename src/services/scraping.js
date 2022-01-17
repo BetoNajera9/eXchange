@@ -63,20 +63,24 @@ export default class Scripting {
 
 			rows.forEach((cell) => {
 				Array.from(cell.querySelectorAll('td')).forEach((data) => {
+					exchange.push('=>')
 					const date = new Date(data.attributes.getNamedItem('data-date').value)
+					exchange.push(date)
+					exchange.push(date.getMonth())
+					exchange.push(today.getMonth())
 
-					if (date.getMonth() === today.getMonth()) {
-						exchange.push('Get in Month')
-						if (date.getDate() >= today.getDate()) {
-							exchange.push('Get in Day')
-							const day = Array.from(data.querySelectorAll('div')).map((i) => {
-								return i.textContent
-							})
-							// if (day.length > 1) {
-							exchange = day
-							// }
-						}
-					}
+					// if (date.getMonth() === today.getMonth()) {
+					// 	exchange.push('Get in Month')
+					// 	if (date.getDate() >= today.getDate()) {
+					// 		exchange.push('Get in Day')
+					// 		const day = Array.from(data.querySelectorAll('div')).map((i) => {
+					// 			return i.textContent
+					// 		})
+					// 		if (day.length > 1) {
+					// 			exchange = day
+					// 		}
+					// 	}
+					// }
 				})
 			})
 
