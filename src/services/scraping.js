@@ -52,6 +52,9 @@ export default class Scripting {
 		await page.goto(this.sunatUrl)
 		await page.waitForSelector('.calendar-table')
 
+		console.log('->')
+		const now = new Date()
+		console.log(`${now.getDate()}/${now.getMonth()}/${now.getFullYear()}`)
 		const elements = await page.evaluate(() => {
 			const today = new Date()
 
@@ -60,14 +63,18 @@ export default class Scripting {
 			)
 
 			let exchange = []
+			exchange.push(
+				`${today.getDate()}/${today.getMonth()}/${today.getFullYear()}`
+			)
 
 			rows.forEach((cell) => {
 				Array.from(cell.querySelectorAll('td')).forEach((data) => {
 					exchange.push('=>')
 					const date = new Date(data.attributes.getNamedItem('data-date').value)
 					exchange.push(date)
-					exchange.push(date.getMonth())
-					exchange.push(today.getMonth())
+					exchange.push(
+						data.attributes.getNamedItem('data-date').value.getMonth()
+					)
 
 					// if (date.getMonth() === today.getMonth()) {
 					// 	exchange.push('Get in Month')
@@ -101,7 +108,7 @@ export default class Scripting {
 				exchange[sell] = +data.replace('Venta', '').replace(' ', '')
 			}
 		})
-
+		console.log('<-')
 		return exchange
 	}
 }
