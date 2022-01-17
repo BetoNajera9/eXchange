@@ -9,6 +9,7 @@ const scraping = new Scraping()
 
 // Obtain data from SUNAT
 const sunat = async () => {
+	console.log('SUNAT updated!!!')
 	const data = await scraping.exchange()
 	data.banco = []
 	data.actualizado = new Date()
