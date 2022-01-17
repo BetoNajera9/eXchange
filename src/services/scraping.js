@@ -59,6 +59,7 @@ export default class Scripting {
 				document.querySelectorAll('#holder-calendar > table > tbody')[0].rows
 			)
 
+			return rows
 			let exchange = []
 
 			rows.forEach((cell) => {
@@ -82,8 +83,8 @@ export default class Scripting {
 		})
 		await this.browser.close()
 
-		const exchange = {}
 		console.log(elements)
+		const exchange = {}
 
 		elements.forEach((data) => {
 			if (data.includes('Compra')) {
