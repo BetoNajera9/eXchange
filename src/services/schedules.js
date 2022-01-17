@@ -15,6 +15,9 @@ const sunat = async () => {
 	data.actualizado = new Date()
 
 	const auth = await authentication.getByName('SUNAT')
+	console.log(data)
+	console.log('=================================')
+	console.log(auth)
 
 	await exchange.updateExchange(data, auth.exchange_id)
 }
