@@ -15,7 +15,7 @@ const sunat = async () => {
 	console.log('Updating...')
 	const data = await scraping.exchange()
 	console.log(data)
-	if (!data.length) {
+	if (!data.compra || !data.venta) {
 		const data = {}
 		const config = {
 			method: 'get',
