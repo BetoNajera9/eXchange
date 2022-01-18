@@ -52,7 +52,6 @@ export default class Scripting {
 		await page.goto(this.sunatUrl)
 		await page.waitForSelector('.calendar-table')
 
-		console.log('->')
 		const elements = await page.evaluate(() => {
 			const today = new Date()
 
@@ -61,23 +60,13 @@ export default class Scripting {
 			)
 
 			let exchange = []
-			exchange.push(
-				document.querySelector(
-					'#holder-calendar > table > tbody > tr:nth-child(3) > td.table-bordered.calendar-day.current._2022_1_14.js-cal-option'
-				).textContent
-			)
 
 			rows.forEach((cell) => {
 				Array.from(cell.querySelectorAll('td')).forEach((data) => {
-					exchange.push('=>')
 					const date = new Date(data.attributes.getNamedItem('data-date').value)
 
-					exchange.push(
-						`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
-					)
 					if (date.getMonth() === today.getMonth()) {
 						if (date.getDate() >= today.getDate()) {
-							exchange.push(data.querySelectorAll('div').value)
 							const day = Array.from(data.querySelectorAll('div')).map((i) => {
 								return i.textContent
 							})
@@ -93,7 +82,6 @@ export default class Scripting {
 		})
 		await this.browser.close()
 
-		console.log(elements)
 		const exchange = {}
 
 		elements.forEach((data) => {
@@ -106,7 +94,7 @@ export default class Scripting {
 				exchange[sell] = +data.replace('Venta', '').replace(' ', '')
 			}
 		})
-		console.log('<-')
+
 		return exchange
 	}
 }
