@@ -13,8 +13,8 @@ const scraping = new Scraping()
 // Obtain data from SUNAT
 const sunat = async () => {
 	const data = await scraping.exchange()
-	if (!data) {
-		const data = {}
+
+	if (!data.compra || !data.venta) {
 		const config = {
 			method: 'get',
 			url: 'https://www.deperu.com/api/rest/cotizaciondolar.json',
