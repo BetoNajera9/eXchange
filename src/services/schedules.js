@@ -14,7 +14,7 @@ const scraping = new Scraping()
 const sunat = async () => {
 	console.log('Updating...')
 	const data = await scraping.exchange()
-	if (!data) {
+	if (!data.length) {
 		const data = {}
 		const config = {
 			method: 'get',
