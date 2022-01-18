@@ -14,7 +14,8 @@ const scraping = new Scraping()
 const sunat = async () => {
 	console.log('Updating...')
 	const data = await scraping.exchange()
-	console.log(data)
+	console.log(data.compra)
+	console.log(!data.compra)
 	if (!data.compra || !data.venta) {
 		const data = {}
 		const config = {
