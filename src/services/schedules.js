@@ -24,10 +24,10 @@ const sunat = async () => {
 
 		data.compra = api.data.Cotizacion[0].Compra
 		data.venta = api.data.Cotizacion[0].Venta
-		console.log(data)
 	}
 	data.banco = []
 	data.actualizado = new Date()
+	console.log(data)
 
 	const auth = await authentication.getByName('SUNAT')
 
