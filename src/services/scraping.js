@@ -46,12 +46,14 @@ export default class Scripting {
 	}
 
 	async exchange() {
+		console.log('Entro exchange')
 		this.browser = await puppeteer.launch(this.puppeteerArgs)
 		const page = await this.browser.newPage()
 		await page.setUserAgent(this.agent)
 		await page.goto(this.sunatUrl)
 		await page.waitForSelector('.calendar-table')
 
+		console.log('Entro first part')
 		const elements = await page.evaluate(() => {
 			const today = new Date()
 
@@ -82,6 +84,7 @@ export default class Scripting {
 		})
 		await this.browser.close()
 
+		console.log(elements)
 		const exchange = {}
 
 		elements.forEach((data) => {
@@ -95,6 +98,7 @@ export default class Scripting {
 			}
 		})
 
+		console.log('End')
 		return exchange
 	}
 }
