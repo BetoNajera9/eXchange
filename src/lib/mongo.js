@@ -45,7 +45,6 @@ export default class MongoLib {
 	}
 
 	async join(collection, query) {
-		console.log(query)
 		const db = await this.connect()
 		return await db
 			.collection(collection)
