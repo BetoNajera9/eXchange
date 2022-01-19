@@ -12,6 +12,7 @@ const scraping = new Scraping()
 
 // Obtain data from SUNAT
 const sunat = async () => {
+	console.log('Updating...')
 	const data = await scraping.exchange()
 
 	if (!data.compra || !data.venta) {
@@ -27,10 +28,12 @@ const sunat = async () => {
 	}
 	data.banco = []
 	data.actualizado = new Date()
+	console.log(data)
 
 	const auth = await authentication.getByName('SUNAT')
 
 	await exchange.updateExchange(data, auth.exchange_id)
+	console.log('Updated!!!')
 }
 
 export default { sunat }
