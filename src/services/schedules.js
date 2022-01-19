@@ -15,13 +15,16 @@ const sunat = async () => {
 	console.log('Updating...')
 	const data = await scraping.exchange()
 
+	console.log(data)
 	if (!data.compra || !data.venta) {
+		console.log('Entro')
 		const config = {
 			method: 'get',
 			url: 'https://www.deperu.com/api/rest/cotizaciondolar.json',
 		}
 
 		const api = await axios(config)
+		console.log(api)
 
 		data.compra = api.data.Cotizacion[0].Compra
 		data.venta = api.data.Cotizacion[0].Venta
